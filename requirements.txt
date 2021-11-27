@@ -1,0 +1,4 @@
+setuptools
+matplotlib
+scikit-learn
+scikit-image
