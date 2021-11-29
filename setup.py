@@ -9,6 +9,7 @@ setup(
 	version='0.0.1',
 	packages=['classifierlib', 'test'],
 	install_requires=[
+		'setuptools',
 		'matplotlib', 
 		'Pillow', 
 		'scikit-image', 

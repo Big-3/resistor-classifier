@@ -2,3 +2,5 @@ setuptools
 matplotlib
 scikit-learn
 scikit-image
+chain
+Pillow
