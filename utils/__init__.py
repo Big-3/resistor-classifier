@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 def flatten_ndim(narr):
     dim = narr.shape
@@ -13,3 +14,11 @@ def flatten_ndim(narr):
             i+=1
 
     return arr
+
+def rand_string(LIMIT=90):
+    random_string=''
+    for _ in range(10):
+        random_integer=random.randint(65, LIMIT)
+        rand_string+=(chr(random_integer))
+
+    return random_string
