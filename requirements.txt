@@ -3,4 +3,5 @@ matplotlib
 scikit-learn
 scikit-image
 chain
+pandas
 Pillow
