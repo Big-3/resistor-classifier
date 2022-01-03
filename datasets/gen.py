@@ -41,7 +41,8 @@ def process_img(img_path):
     img.set_areas(thresh_lower, thresh_upper, NAMES)
     return img.areas
 
-if __name__ == '__main__':
+def main():
+    """
     for img_path in glob.iglob('{}/*.png'.format(IMG_INPUT_PATH)):
         df = pd.DataFrame()
         print('PROCESSING IMAGE ' + img_path)
@@ -49,8 +50,7 @@ if __name__ == '__main__':
         areas['label'] = img_path.split('/')[-1].split('-')[0]
         df = df.append(areas, ignore_index=True)
         df.to_csv(img_path.split('/')[-1].split('.')[0] + '.csv')
-        del areas
-        del df
+    """
     nelements = get_csv_numbert()
     size = packet_size(nelements)
     while(size != 1):
@@ -71,7 +71,8 @@ if __name__ == '__main__':
                 i=0
             i+=1
         size = packet_size(get_csv_numbert())
-        del to_merge
-        del files
 
     exit(1)
+
+if __name__ == '__main__':
+    main()

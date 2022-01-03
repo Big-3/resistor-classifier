@@ -19,6 +19,9 @@ def rand_string(LIMIT=90):
     random_string=''
     for _ in range(10):
         random_integer=random.randint(65, LIMIT)
-        rand_string+=(chr(random_integer))
+        random_string+=(chr(random_integer))
 
     return random_string
+
+def makeArray(text):
+    return np.fromstring(text,sep=' ')

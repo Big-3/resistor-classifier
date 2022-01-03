@@ -10,6 +10,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import utils
+import statistics
 
 class Image():
     def __init__(self, path=''):
@@ -34,7 +35,7 @@ class Image():
         if len(areas_lower) is len(names) and len(areas_upper) is len(areas_lower):
             for i in range(len(names)):
                 area = cv2.inRange(self.imgHSV, areas_lower[i], areas_upper[i])
-                self.areas[names[i]] = utils.flatten_ndim(cv2.dilate(cv2.erode(area, kernel, iterations), kernel, iterations)).tolist()
+                self.areas[names[i]] = statistics.mean(utils.flatten_ndim(cv2.dilate(cv2.erode(area, kernel, iterations), kernel, iterations)).tolist())
         else:
             raise Exception("Lists do not have same length. Expect an N length lists containing the differents areas.")
 
