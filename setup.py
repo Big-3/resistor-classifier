@@ -7,7 +7,7 @@ BASE_DIR=Path(__file__).resolve()
 setup(
 	name='resistor-classifier',
 	version='0.0.1',
-	packages=['classifierlib', 'utils', 'test'],
+	packages=['classifierlib', 'src','utils', 'test'],
 	install_requires=[
 		'setuptools',
 		'matplotlib', 

@@ -6,5 +6,4 @@ chain
 pandas
 Pillow
 torch
-numba
-cudatoolkit
+pickle

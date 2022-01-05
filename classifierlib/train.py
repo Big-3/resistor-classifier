@@ -11,6 +11,7 @@ from models import Image, Thresholds
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier
+import pickle
 
 @jit
 def fit_and_predict(model, X, y, X_test):
@@ -56,3 +57,7 @@ for i in range(len(test)):
 
 print('Misclassified samples: %d' % (y_test != y_pred).sum())
 print('Accuracy: %.2f%%' % (100.0 * bag.score(X_test, y_test)))
+
+
+with(open("model.pkl", "wb") as f):
+    pickle.dump(bag, f)
