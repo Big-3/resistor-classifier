@@ -7,8 +7,8 @@ from classifierlib import models
 
 INPUT_FOLDER='./input_images/'
 
-NAMES=['negre', 'negre2', 'marro', 'roig', 'roig2', 'taronja', 'groc', 'verd', 'blau', 'lila', 'gris', 'blanc']
-resistencies=['100K', '100k', '120k', '150k', '180k', '220k', '270k', '330k', '390k', '470k', '560k', '680k', '820k']
+NAMES=[]
+resistencies=['100k', '120k', '150k', '180k', '220k', '270k', '330k', '390k', '470k', '560k', '680k', '820k']
 
 thresh_lower = []
 thresh_upper = []
@@ -16,6 +16,7 @@ for thresh in models.Thresholds.thresh:
     if 'LOWER' in thresh:
         thresh_lower.append(models.Thresholds.thresh[thresh])
     else:
+        NAMES.append(thresh.split('_')[0])
         thresh_upper.append(models.Thresholds.thresh[thresh])
 
 

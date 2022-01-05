@@ -19,7 +19,7 @@ def fit_and_predict(model, X, y, X_test):
     predict = model.predict(X_test)
     return model, predict
 
-resistors = pd.read_csv(get_train_dataset_directory() + '/concat_BABITNYPLF.csv')
+resistors = pd.read_csv(get_train_dataset_directory() + '/concat_QJBOXBRZQV.csv')
 resistors['label'] = resistors['label'].astype('category')
 resistors['label'] = resistors['label'].cat.codes
 print('loaded dataset', resistors.shape)
@@ -32,17 +32,17 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_
 print(f'trained Xtrain {X_train.shape} Xtest {X_test.shape} ytrain {y_train.shape} ytest {y_test.shape}')
 
 
-neural_net = MLPClassifier(solver='lbfgs', max_iter=1000000, hidden_layer_sizes=(200,),activation='relu',random_state=1)
+neural_net = MLPClassifier(solver='adam', max_iter=1000, random_state=1)
+
 bag = BaggingClassifier(
     base_estimator=neural_net,
     n_estimators=10,
     max_samples=1.0,
     max_features=1.0,
     bootstrap=False,
-    n_jobs=1,
+    n_jobs=2,
     random_state=1)
-
-bag, y_pred = fit_and_predict(bag, X_train, y_train, X_test)
+model, y_pred = fit_and_predict(bag, X_train, y_train, X_test)
 
 test = []
 predictions = []
@@ -56,8 +56,8 @@ for i in range(len(test)):
 	print(f'Got: {predictions[i]}; Expected: {test[i]}; Deviation: {test[i] - predictions[i]}')
 
 print('Misclassified samples: %d' % (y_test != y_pred).sum())
-print('Accuracy: %.2f%%' % (100.0 * bag.score(X_test, y_test)))
+print('Accuracy: %.2f%%' % (100.0 * model.score(X_test, y_test)))
 
 
 with(open("model.pkl", "wb") as f):
-    pickle.dump(bag, f)
+    pickle.dump(model, f)

@@ -4,8 +4,9 @@ import glob
 import os
 import utils
 
+VALID_EXT=('.png', '.jpeg', '.jpg', '.JPG')
 IMG_INPUT_PATH='./Imatges_retallades'
-NAMES=['negre', 'negre2', 'marro', 'roig', 'roig2', 'taronja', 'groc', 'verd', 'blau', 'lila', 'gris', 'blanc']
+NAMES=[]
 
 thresh_lower = []
 thresh_upper = []
@@ -13,13 +14,14 @@ for thresh in models.Thresholds.thresh:
     if 'LOWER' in thresh:
         thresh_lower.append(models.Thresholds.thresh[thresh])
     else:
+        NAMES.append(thresh.split('_')[0])
         thresh_upper.append(models.Thresholds.thresh[thresh])
 
 def merge_csv(csv_list):
     return pd.concat(map(pd.read_csv, csv_list), ignore_index=True)
 
 def packet_size(nelements):
-    possible = [2,3,4,5,6,7,8,9,10]
+    possible = [2,3,4,5,6,7,8,9,10,11,13,17]
     for packet_size in possible:
         if nelements%packet_size == 0:
             return packet_size
@@ -42,15 +44,14 @@ def process_img(img_path):
     return img.areas
 
 def main():
-    """
-    for img_path in glob.iglob('{}/*.png'.format(IMG_INPUT_PATH)):
-        df = pd.DataFrame()
-        print('PROCESSING IMAGE ' + img_path)
-        areas = process_img(img_path)
-        areas['label'] = img_path.split('/')[-1].split('-')[0]
-        df = df.append(areas, ignore_index=True)
-        df.to_csv(img_path.split('/')[-1].split('.')[0] + '.csv')
-    """
+    for img_path in glob.iglob('{}/*'.format(IMG_INPUT_PATH)):
+        if img_path.endswith(VALID_EXT):
+            df = pd.DataFrame()
+            print('PROCESSING IMAGE ' + img_path)
+            areas = process_img(img_path)
+            areas['label'] = img_path.split('/')[-1].split('-')[0]
+            df = df.append(areas, ignore_index=True)
+            df.to_csv(img_path.split('/')[-1].split('.')[0] + '.csv')
     nelements = get_csv_numbert()
     size = packet_size(nelements)
     while(size != 1):
