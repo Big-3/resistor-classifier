@@ -21,7 +21,7 @@ def merge_csv(csv_list):
     return pd.concat(map(pd.read_csv, csv_list), ignore_index=True)
 
 def packet_size(nelements):
-    possible = [2,3,4,5,6,7,8,9,10,11,13,17]
+    possible = [2,3,4,5,6,7,8,9,10,11,13,17,19,23,27,39,31,37,39,41,43,47,51,53,57]
     for packet_size in possible:
         if nelements%packet_size == 0:
             return packet_size
@@ -44,6 +44,7 @@ def process_img(img_path):
     return img.areas
 
 def main():
+    """
     for img_path in glob.iglob('{}/*'.format(IMG_INPUT_PATH)):
         if img_path.endswith(VALID_EXT):
             df = pd.DataFrame()
@@ -52,6 +53,7 @@ def main():
             areas['label'] = img_path.split('/')[-1].split('-')[0]
             df = df.append(areas, ignore_index=True)
             df.to_csv(img_path.split('/')[-1].split('.')[0] + '.csv')
+    """
     nelements = get_csv_numbert()
     size = packet_size(nelements)
     while(size != 1):

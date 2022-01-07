@@ -10,7 +10,7 @@ from models import Image, Thresholds
 # neural network
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import BaggingClassifier
+from sklearn.ensemble import BaggingClassifier, RandomForestClassifier
 import pickle
 
 @jit
@@ -19,7 +19,7 @@ def fit_and_predict(model, X, y, X_test):
     predict = model.predict(X_test)
     return model, predict
 
-resistors = pd.read_csv(get_train_dataset_directory() + '/concat_QJBOXBRZQV.csv')
+resistors = pd.read_csv(get_train_dataset_directory() + '/concat_VFUMLNDDGU.csv')
 resistors['label'] = resistors['label'].astype('category')
 resistors['label'] = resistors['label'].cat.codes
 print('loaded dataset', resistors.shape)
@@ -28,21 +28,19 @@ X = resistors[resistors.columns[0:-1]]
 y = resistors['label']
 print('X shape y shape', X.shape, y.shape)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1, stratify=y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
 print(f'trained Xtrain {X_train.shape} Xtest {X_test.shape} ytrain {y_train.shape} ytest {y_test.shape}')
 
-
-neural_net = MLPClassifier(solver='adam', max_iter=1000, random_state=1)
-
-bag = BaggingClassifier(
-    base_estimator=neural_net,
-    n_estimators=10,
-    max_samples=1.0,
-    max_features=1.0,
-    bootstrap=False,
-    n_jobs=2,
+"""
+neural_net = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(250,), max_iter=20000, tol=1e-5, random_state=1, activation='tanh', shuffle=True)
+"""
+clf = RandomForestClassifier(
+    verbose=1,
+    max_depth=850,
+    n_jobs=1,
     random_state=1)
-model, y_pred = fit_and_predict(bag, X_train, y_train, X_test)
+
+model, y_pred = fit_and_predict(clf, X_train, y_train, X_test)
 
 test = []
 predictions = []
