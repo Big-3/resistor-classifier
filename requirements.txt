@@ -1,4 +1,5 @@
 setuptools
+seaborn
 matplotlib
 scikit-learn
 scikit-image
@@ -6,4 +7,3 @@ chain
 pandas
 Pillow
 torch
-pickle
