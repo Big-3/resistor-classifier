@@ -16,7 +16,7 @@ pip install -r requeriments.txt
 
 Finalment, fem el setup per a que python pugui saber quins paquets estem modificant:
 ```
-python setup.py
+python setup.py develop
 ```
 
 ## Testing

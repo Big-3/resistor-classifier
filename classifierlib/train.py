@@ -29,6 +29,7 @@ print('X shape y shape', X.shape, y.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1, stratify=y)
 print(f'trained Xtrain {X_train.shape} Xtest {X_test.shape} ytrain {y_train.shape} ytest {y_test.shape}')
+"""
 neural_net = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(250,), max_iter=20000, random_state=1, activation='relu', shuffle=True)
 clf = BaggingClassifier(
     n_estimators=100,
@@ -42,7 +43,7 @@ clf = RandomForestClassifier(
     max_depth=850,
     n_jobs=1,
     random_state=1)
-"""
+
 model, y_pred = fit_and_predict(clf, X_train, y_train, X_test)
 test = []
 predictions = []
